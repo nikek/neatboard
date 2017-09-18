@@ -31,17 +31,22 @@ const NeatBoard = connect(
   },
   function NeatBoard(props) {
     const p = props
-    const margin = p.width * 0.02
-    const oneUnit = (p.width && (p.width - 13 * margin) / 12) || 30
+    const pWidth = p.width
+    const margin = pWidth / 50
+    const padding = pWidth / 100
+    const oneUnit = (pWidth - 13 * margin) / 12 || 30
 
     const attributes = {
       className: 'layout',
       layout: p.layout.map(setMinSize),
       cols: 12,
       margin: [margin, margin],
-      width: p.width || 1200,
+      width: pWidth || 1200,
       rowHeight: oneUnit,
       onLayoutChange: layout => {
+        p.onLayoutChange({ layout: layout.map(cleanLayout) })
+      },
+      onResize: layout => {
         p.onLayoutChange({ layout: layout.map(cleanLayout) })
       },
     }
@@ -50,11 +55,19 @@ const NeatBoard = connect(
       <ReactGridLayout {...attributes}>
         {p.layout.map(g => (
           <div key={g.i}>
-            <SuperSpark
-              width={oneUnit * g.w + margin * (g.w - 1) - 6}
-              height={oneUnit * g.h + margin * (g.h - 1) - 6}
-              data={p.data[p.graphs[g.i].data]}
-            />
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                padding: padding / 2,
+              }}
+              className="react-grid-content">
+              <SuperSpark
+                width={oneUnit * g.w + margin * (g.w - 1) - padding}
+                height={oneUnit * g.h + margin * (g.h - 1) - padding}
+                data={p.data[p.graphs[g.i].data]}
+              />
+            </div>
           </div>
         ))}
       </ReactGridLayout>
