@@ -84,6 +84,6 @@
 }
 
 .react-grid-item.react-draggable-dragging .react-grid-content {
-  transform: rotate(10deg);
+  transform: rotate(7deg);
   box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.06);
 }

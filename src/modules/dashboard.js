@@ -161,6 +161,7 @@ const layout = [
 
 export default {
   state: {
+    title: 'Service',
     layout,
     graphs: {
       a: { data: 'realData' },
